@@ -32,27 +32,63 @@ public class FilesInOut {
 
         // Finally, add code to read the filenames as arguments from the command line.
 
-        File inputText = new File("E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\input.txt");
+        // replace these with relevant locations
+        boolean upperCaseAll = false;
+        String ioPattern = "([A-Za-z]+\\.txt)";
+        String inputFileName = "";
+        String outputFileName = "";
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Please enter the input file name: ");
+        boolean validate = false;
+        while (!validate) {
+            inputFileName = scan.next();
+            boolean matches = inputFileName.matches(ioPattern);
+            if (matches) {
+                validate = true;
+            } else {
+                System.out.println("Invalid input, please try again: ");
+            }
+        }
+
+        System.out.println("Please enter the output file name: ");
+        while (scan.hasNextLine()) {
+            if (scan.next().matches(ioPattern)) {
+                outputFileName = scan.next().trim();
+            } else {
+                System.out.println("Invalid input, please try again: ");
+                scan.next();
+            }
+        }
+
+        String inputTxtLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + inputFileName;
+        String outputFileLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + outputFileName;
+
+        File inputText = new File(inputTxtLocation);
+        PrintWriter writer = new PrintWriter(new File(outputFileLocation));
+        Scanner inputScan = new Scanner(inputText);
+        inputScan.useDelimiter("\\n");
+        String line;
+        String firstname;
+        String surname;
+        String dateOfBirth;
+        String[] details;
 
         try {
-            Scanner scan = new Scanner(inputText);
-            scan.useDelimiter("\\n");
-            String line;
-            String firstname;
-            String surname;
-            String dateOfBirth;
-            String[] details;
             while(scan.hasNextLine()) {
                 line = scan.next().trim();
                 details = lineSplitter(line);
-                firstname = capitaliser(details[0]);
-                surname = capitaliser(details[1]);
+                firstname = capitaliser(details[0], upperCaseAll);
+                surname = capitaliser(details[1], upperCaseAll);
                 dateOfBirth = dateFormatter(details[2]);
-                System.out.println(firstname + " " + surname + " " + dateOfBirth);
+                writer.write(firstname + " " + surname + " " + dateOfBirth + "\n");
             }
         } catch (FileNotFoundException ex) {
 
         }
+
+        writer.flush();
+        writer.close();
 
     } // main
 
@@ -70,9 +106,15 @@ public class FilesInOut {
         return formattedDate;
     }
 
-    public static String capitaliser(String name) {
-        String toUpperCase = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return toUpperCase;
+    public static String capitaliser(String name, boolean upperCaseAll) {
+        String string;
+        if (upperCaseAll) {
+            string = name.toUpperCase();
+        } else {
+            string = name.substring(0, 1).toUpperCase() + name.substring(1);
+        }
+        return string;
     }
+
 
 } // FilesInOut

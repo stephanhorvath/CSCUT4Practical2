@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FormatNames:jar">
+    <output-path>$PROJECT_DIR$/</output-path>
+    <root id="archive" name="CSCUT4Practical2.jar">
+      <element id="module-output" name="CSCUT4Practical2" />
+    </root>
+  </artifact>
+</component>
