@@ -37,29 +37,46 @@ public class FilesInOut {
         String ioPattern = "([A-Za-z]+\\.txt)";
         String inputFileName = "";
         String outputFileName = "";
+        String iWantUpperCase;
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Please enter the input file name: ");
-        boolean validate = false;
-        while (!validate) {
+        boolean validateInput = false;
+        while (!validateInput) {
             inputFileName = scan.next();
             boolean matches = inputFileName.matches(ioPattern);
             if (matches) {
-                validate = true;
+                validateInput = true;
+            } else {
+                System.out.println("Invalid input file name, please try again: ");
+            }
+        }
+
+        System.out.println("Please enter the desired output file name: ");
+        boolean validateOutput = false;
+        while (!validateOutput) {
+            outputFileName = scan.next();
+            boolean matches = outputFileName.matches(ioPattern);
+            if (matches) {
+                validateOutput = true;
+            } else {
+                System.out.println("Invalid output file name, please try again: ");
+            }
+        }
+
+        System.out.println("Enter -u if output is wanted all in uppercase. Leave empty and press enter if not: ");
+        boolean validateUpper = false;
+        while (!validateUpper) {
+            iWantUpperCase = scan.next();
+            boolean matches = iWantUpperCase.equalsIgnoreCase("-u");
+            if (matches) {
+                upperCaseAll = true;
+                validateUpper = true;
             } else {
                 System.out.println("Invalid input, please try again: ");
             }
         }
 
-        System.out.println("Please enter the output file name: ");
-        while (scan.hasNextLine()) {
-            if (scan.next().matches(ioPattern)) {
-                outputFileName = scan.next().trim();
-            } else {
-                System.out.println("Invalid input, please try again: ");
-                scan.next();
-            }
-        }
 
         String inputTxtLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + inputFileName;
         String outputFileLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + outputFileName;
@@ -75,8 +92,8 @@ public class FilesInOut {
         String[] details;
 
         try {
-            while(scan.hasNextLine()) {
-                line = scan.next().trim();
+            while(inputScan.hasNextLine()) {
+                line = inputScan.next().trim();
                 details = lineSplitter(line);
                 firstname = capitaliser(details[0], upperCaseAll);
                 surname = capitaliser(details[1], upperCaseAll);
