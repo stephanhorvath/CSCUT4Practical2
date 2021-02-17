@@ -92,19 +92,31 @@ public class FilesInOut {
         Scanner inputScan = new Scanner(readInput);
         inputScan.useDelimiter("\\n");
         String line;
-        String firstname;
+        String firstName;
+        String middleName;
         String surname;
         String dateOfBirth;
         String[] details;
+        String formattedLine;
 
         try {
             while(inputScan.hasNextLine()) {
                 line = inputScan.next().trim();
                 details = lineSplitter(line);
-                firstname = capitaliser(details[0], upperCaseAll);
-                surname = capitaliser(details[1], upperCaseAll);
-                dateOfBirth = dateFormatter(details[2]);
-                writer.write(firstname + " " + surname + " " + dateOfBirth + "\n");
+                if (details.length > 3) {
+                    firstName = capitaliser(details[0], upperCaseAll);
+                    middleName = capitaliser(details[1], upperCaseAll);
+                    surname = capitaliser(details[2], upperCaseAll);
+                    dateOfBirth = dateFormatter(details[3]);
+                    formattedLine = detailWriter(firstName, middleName, surname, dateOfBirth);
+                    writer.write(formattedLine);
+                } else {
+                    firstName = capitaliser(details[0], upperCaseAll);
+                    surname = capitaliser(details[1], upperCaseAll);
+                    dateOfBirth = dateFormatter(details[2]);
+                    formattedLine = detailWriter(firstName, surname, dateOfBirth);
+                    writer.write(formattedLine);
+                }
             }
         } catch (FileNotFoundException ex) {
 
@@ -139,5 +151,12 @@ public class FilesInOut {
         return string;
     }
 
+    public static String detailWriter(String firstName, String surname, String dateOfBirth) {
+        return (firstName + " " + surname + " " + dateOfBirth + "\n");
+    }
+
+    public static String detailWriter(String firstName, String middleName, String surname, String dateOfBirth) {
+        return (firstName + " " + middleName + " " + surname + " " + dateOfBirth + "\n");
+    }
 
 } // FilesInOut
