@@ -33,8 +33,12 @@ public class FilesInOut {
         // Finally, add code to read the filenames as arguments from the command line.
 
         // replace these with relevant locations
+        String directory = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\";
+
+        File inputFile;
+        File outputFile;
         boolean upperCaseAll = false;
-        String ioPattern = "([A-Za-z]+\\.txt)";
+        String ioPattern = "([A-Za-z0-9]+\\.txt)";
         String inputFileName = "";
         String outputFileName = "";
         String iWantUpperCase;
@@ -43,9 +47,10 @@ public class FilesInOut {
         System.out.println("Please enter the input file name: ");
         boolean validateInput = false;
         while (!validateInput) {
-            inputFileName = scan.next();
+            inputFileName = scan.nextLine();
+            inputFile = new File(directory+inputFileName);
             boolean matches = inputFileName.matches(ioPattern);
-            if (matches) {
+            if (matches && inputFile.isFile()) {
                 validateInput = true;
             } else {
                 System.out.println("Invalid input file name, please try again: ");
@@ -55,9 +60,10 @@ public class FilesInOut {
         System.out.println("Please enter the desired output file name: ");
         boolean validateOutput = false;
         while (!validateOutput) {
-            outputFileName = scan.next();
+            outputFileName = scan.nextLine();
+            outputFile = new File(directory+outputFileName);
             boolean matches = outputFileName.matches(ioPattern);
-            if (matches) {
+            if (matches && !outputFile.isFile()) {
                 validateOutput = true;
             } else {
                 System.out.println("Invalid output file name, please try again: ");
@@ -67,23 +73,23 @@ public class FilesInOut {
         System.out.println("Enter -u if output is wanted all in uppercase. Leave empty and press enter if not: ");
         boolean validateUpper = false;
         while (!validateUpper) {
-            iWantUpperCase = scan.next();
-            boolean matches = iWantUpperCase.equalsIgnoreCase("-u");
-            if (matches) {
+            iWantUpperCase = scan.nextLine();
+            if (iWantUpperCase.equalsIgnoreCase("-u")) {
                 upperCaseAll = true;
                 validateUpper = true;
+            } else if (iWantUpperCase.equals("")) {
+                validateUpper = true;
             } else {
-                System.out.println("Invalid input, please try again: ");
+                System.out.println("Invalid input, please try again.");
+                System.out.println("Enter -u if output is wanted all in uppercase. Leave empty and press enter if not: ");
             }
         }
 
+        // create the printwriter that will create the output file (e.g. output.txt)
+        PrintWriter writer = new PrintWriter(new File(outputFileName));
 
-        String inputTxtLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + inputFileName;
-        String outputFileLocation = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\" + outputFileName;
-
-        File inputText = new File(inputTxtLocation);
-        PrintWriter writer = new PrintWriter(new File(outputFileLocation));
-        Scanner inputScan = new Scanner(inputText);
+        File readInput = new File(directory+inputFileName);
+        Scanner inputScan = new Scanner(readInput);
         inputScan.useDelimiter("\\n");
         String line;
         String firstname;
