@@ -41,6 +41,10 @@ public class Validator {
         outputFileName = fileName;
     }
 
+    /**
+     * Validates the text of the inputted file to determine if it exists and can be read from.
+     * @return
+     */
     public boolean inputValidator() {
         System.out.println("Please enter the input file name: ");
         boolean validInput = false;
@@ -57,6 +61,11 @@ public class Validator {
         return validInput;
     }
 
+    /**
+     * Validates the possible name of the output formatted file to make sure it matches the naming convention
+     * and does not already exist.
+     * @return
+     */
     public boolean outputValidator() {
         System.out.println("Please enter the desired output file name: ");
         boolean validOutput = false;
@@ -73,6 +82,10 @@ public class Validator {
         return validOutput;
     }
 
+    /**
+     * Validates the -u flag to make the entire output uppercase
+     * @return
+     */
     public boolean flagValidator() {
         System.out.println("Enter -u if output is wanted all in uppercase. Leave empty and press enter if not: ");
         boolean upperCaseAll = false;
