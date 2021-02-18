@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,21 +20,7 @@ import java.util.regex.Pattern;
 public class FilesInOut {
 
     public static void main(String[] args) throws Exception {
-        // Replace this with statements to set the file name (input) and file name (output).
-        // Initially it will be easier to hardcode suitable file names.
-
-        // Set up a new Scanner to read the input file.
-        // Processing line by line would be sensible here.
-        // Initially, echo the text to System.out to check you are reading correctly.
-        // Then add code to modify the text to the output format.
-
-        // Set up a new PrintWriter to write the output file.
-        // Add suitable code into the above processing (because you need to do this line by line also.
-        // That is, read a line, write a line, loop.
-
-        // Finally, add code to read the filenames as arguments from the command line.
-
-        // replace these with relevant locations
+        // replace string with relevant directory
         String directory = "E:\\Documents\\Uni\\bachelor-2\\semester-2\\CSCU9T4\\CSCUT4Practical2\\";
 
         File inputFile;
@@ -152,11 +140,15 @@ public class FilesInOut {
     }
 
     public static String detailWriter(String firstName, String surname, String dateOfBirth) {
-        return (firstName + " " + surname + " " + dateOfBirth + "\n");
+        // return (firstName + " " + surname + " " + dateOfBirth + "\n");
+        String fullName = firstName + " " + surname;
+        return String.format("%-20s %10s\n", fullName, dateOfBirth);
     }
 
     public static String detailWriter(String firstName, String middleName, String surname, String dateOfBirth) {
-        return (firstName + " " + middleName + " " + surname + " " + dateOfBirth + "\n");
+        // return (firstName + " " + middleName + ". " + surname + " " + dateOfBirth + "\n");
+        String fullName = firstName + " " + middleName + ". " + surname;
+        return String.format("%-20s %10s\n", fullName, dateOfBirth);
     }
 
 } // FilesInOut
